@@ -1,8 +1,16 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
 
 app.use(bodyParser.json())
+
+morgan.token('post-body', req => JSON.stringify(req.body))
+app.use(
+    morgan(
+        ':method :url :status :res[content-length] - :response-time ms :post-body'
+    )
+)
 
 let persons = [
     {
@@ -62,6 +70,7 @@ const findPerson = name => persons.find(person => person.name === name)
 
 app.post('/api/persons', (req, res) => {
     const body = req.body
+    console.log(typeof body)
 
     if (!body.name) {
         return res.status(400).json({ error: 'name is missing' })
