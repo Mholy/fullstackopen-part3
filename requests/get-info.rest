@@ -1,1 +1,1 @@
-GET https://still-escarpment-03255.herokuapp.com/info
+GET http://localhost:3001/info
